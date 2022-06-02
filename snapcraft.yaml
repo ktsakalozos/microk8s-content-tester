@@ -1,0 +1,33 @@
+name: tester
+version: 'whatever'
+summary: Test microk8s content.
+description: |
+  Snap to test microk8s content interface
+build-base: core18
+#base: bare
+
+grade: stable
+confinement: strict
+
+plugs:
+  microk8s:
+    interface: content
+    content: microk8s
+    target: $SNAP_DATA
+
+apps:
+  hello:
+    command: bin/hello.sh
+#    adapter: none
+
+parts:
+  apart:
+    plugin: dump
+    source: .
+    organize:
+      hello.sh: bin/
+
+  auxiliary:
+    plugin: nil
+    stage-packages:
+      - bash
